@@ -25,10 +25,15 @@ export class MessageService {
   async findAll() {
     try {
       const messages = await this.messageModel.find({});
-      if (messages.length <= 0) {
-        return { message: 'No messages were found', messages: [] };
-      }
       let unreadTotal = 0;
+      if (messages.length <= 0) {
+        return {
+          message: 'No messages were found',
+          messages: [],
+          unreadTotal,
+        };
+      }
+
       messages.filter((message) => {
         message.isRead === false && unreadTotal++;
       });
